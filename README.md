@@ -14,7 +14,7 @@ GitHub Pages publie la racine de la branche `main`. Le fichier `.nojekyll` désa
 
 PACIFIC-PRESERVED est une réalisation chez CASIS pour le consortium PACIFIC. L’étude de cas décrit le travail à deux avec un alternant supervisé, l’amélioration du design à partir de slides, les échanges avec un interlocuteur Sanofi et le backend de publication, d’après les précisions de Maxime. Le cas infrastructure reprend les missions documentées dans son CV.
 
-Les trois projets web sont illustrés par des captures réelles de leurs interfaces publiques. Le visuel random-list montre une répartition de quatre joueurs de démonstration. ArXivSearch est présenté comme une version alpha.
+Les trois projets web sont illustrés par des captures réelles de leurs interfaces publiques. Les trois captures ont été fournies par Maxime ; le visuel random-list montre treize joueurs de démonstration répartis en cinq équipes. ArXivSearch est présenté comme une version alpha.
 
 `effects.css` contient les animations avec respect de la préférence de réduction des mouvements. `refinements.css` contient l’identité visuelle, les études de cas et les améliorations mobiles. Le favicon SVG utilise un monogramme MF vectoriel.
 
