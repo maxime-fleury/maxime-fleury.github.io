@@ -1,0 +1,89 @@
+/* Small, independent movements preserve the diagram's original rotations. */
+.arch-node { animation: node-float 6s ease-in-out infinite; }
+.node-ship { animation-duration: 7.5s; animation-delay: -2.5s; }
+.node-run { animation-duration: 8s; animation-delay: -4s; }
+.arch-core { animation: core-glow 7s ease-in-out infinite; }
+.arch-core strong::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 15px;
+  margin-left: 6px;
+  vertical-align: -1px;
+  background: var(--accent);
+  animation: terminal-caret 1.15s steps(1, end) infinite;
+}
+
+@keyframes node-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -9px; }
+}
+@keyframes core-glow {
+  0%, 100% { box-shadow: 0 0 35px #c7f68c06; }
+  50% { box-shadow: 0 0 55px #c7f68c16; }
+}
+@keyframes terminal-caret {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: 0; }
+}
+
+.project, .expertise-list article, .tags span,
+.arch-node, .all-projects, .socials button {
+  transition: border-color .25s ease, background-color .25s ease,
+    box-shadow .25s ease;
+}
+.project { transition: border-color .25s ease, box-shadow .25s ease, translate .25s ease; }
+.text-link span, .nav-contact span, .button span,
+.project-info h3 > a, .expert-icon, .email span {
+  display: inline-block;
+  transition: transform .25s ease, color .25s ease;
+}
+nav a { position: relative; padding-block: 7px; }
+nav a::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  bottom: 0;
+  inset-inline: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+nav a:focus-visible::after { transform: scaleX(1); }
+.project:focus-within { border-color: #78965b; }
+.text-link:focus-visible span { transform: translate(3px, -2px); }
+.email span { margin-left: 30px; }
+
+@media (hover: hover) and (pointer: fine) {
+  nav a:hover::after { transform: scaleX(1); }
+  .project:hover {
+    translate: 0 -4px;
+    border-color: #78965b;
+    box-shadow: 0 15px 40px #0002;
+  }
+  .tags span:hover { border-color: #79975e; background: #c7f68c0b; }
+  .text-link:hover span, .nav-contact:hover span,
+  .project-info h3 > a:hover, .email:hover span { transform: translate(3px, -3px); }
+  .button:hover span { transform: translate(2px, 2px); }
+  .expertise-list article:hover { border-color: #81976c; background: #c7f68c04; }
+  .expertise-list article:hover .expert-icon { color: var(--accent); transform: translateY(-3px); }
+  .architecture:hover .arch-node { border-color: #8da76d; }
+  .all-projects:hover { color: var(--accent); }
+}
+
+@media (max-width: 760px) {
+  .email span { margin-left: 14px; }
+  @keyframes node-float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -5px; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .project:hover { translate: none; }
+  .arch-core strong::after { opacity: 1; }
+}
