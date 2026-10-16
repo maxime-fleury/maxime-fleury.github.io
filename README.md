@@ -12,7 +12,11 @@ Site statique en français, adapté aux ordinateurs et mobiles. Aucun outil de c
 
 GitHub Pages publie la racine de la branche `main`. Le fichier `.nojekyll` désactive le traitement Jekyll.
 
-PACIFIC-PRESERVED est une réalisation chez CASIS pour le consortium PACIFIC. La participation de Sanofi au consortium a été indiquée par Maxime. Les illustrations des projets sont des évocations graphiques, pas des captures des sites.
+PACIFIC-PRESERVED est une réalisation chez CASIS pour le consortium PACIFIC. L’étude de cas décrit le travail à deux avec un alternant supervisé, l’amélioration du design à partir de slides, les échanges avec un interlocuteur Sanofi et le backend de publication, d’après les précisions de Maxime. Le cas infrastructure reprend les missions documentées dans son CV.
+
+Les trois projets web sont illustrés par des captures réelles de leurs interfaces publiques. Le visuel random-list montre une répartition de quatre joueurs de démonstration. ArXivSearch est présenté comme une version alpha.
+
+`effects.css` contient les animations avec respect de la préférence de réduction des mouvements. `refinements.css` contient l’identité visuelle, les études de cas et les améliorations mobiles. Le favicon SVG utilise un monogramme MF vectoriel.
 
 ## Sous-domaine is-a.dev
 
