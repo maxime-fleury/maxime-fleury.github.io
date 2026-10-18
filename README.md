@@ -1,4 +1,4 @@
-# Portfolio — Maxime Fleury
+# Portfolio · Maxime Fleury
 
 Portfolio professionnel : https://maxime-fleury.github.io/
 
