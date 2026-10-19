@@ -18,6 +18,10 @@ Les trois projets web sont illustrés par des captures réelles de leurs interfa
 
 `effects.css` contient les animations avec respect de la préférence de réduction des mouvements. `refinements.css` contient l’identité visuelle, les études de cas et les améliorations mobiles. Le favicon SVG utilise un monogramme MF vectoriel.
 
+## Langues
+
+Le français est la langue par défaut. `?lang=en` active la traduction anglaise de la page via `i18n.js`, y compris les détails des projets, les libellés d’accessibilité et le retour de copie de l’e-mail. Un lien FR/EN permet de changer de langue ; aucun choix n’est mémorisé sans paramètre d’URL. Les captures restent celles des applications et le CV PDF reste en français, ce qui est précisé dans le libellé anglais.
+
 ## Sous-domaine is-a.dev
 
 Pour demander `maxime-fleury.is-a.dev`, créer `domains/maxime-fleury.json` dans le dépôt `is-a-dev/register` :
