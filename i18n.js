@@ -1,5 +1,6 @@
 (() => {
-  const language = new URLSearchParams(window.location.search).get('lang') === 'en' ? 'en' : 'fr';
+  const languageFromURL = () => new URLSearchParams(window.location.search).get('lang') === 'en' ? 'en' : 'fr';
+  let language = languageFromURL();
   const translations = {
     'Maxime Fleury, développeur fullstack & DevOps à Dijon. Développement web, infrastructure et réseau : découvrez mon parcours et mes réalisations.': 'Maxime Fleury, fullstack developer and DevOps practitioner in Dijon, France. Explore my web development, infrastructure and networking projects.',
     'Maxime Fleury · Développeur Fullstack & DevOps': 'Maxime Fleury · Fullstack Developer & DevOps',
@@ -137,31 +138,49 @@
 
   const t = (value) => language === 'en' ? (translations[value] ?? value) : value;
   window.portfolioI18n = { language, t };
-  if (language === 'en') {
-    document.documentElement.lang = 'en';
-    const walker = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      if (!node.parentElement.closest('script, style')) nodes.push(node);
+  const switchButton = document.getElementById('language-switch');
+  const walker = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (!node.parentElement.closest('script, style, #language-switch, #year, #copy-status')) {
+      const original = node.nodeValue;
+      if (Object.hasOwn(translations, original.trim())) nodes.push({ node, original });
     }
-    for (const node of nodes) {
-      const key = node.nodeValue.trim();
-      if (Object.hasOwn(translations, key)) node.nodeValue = node.nodeValue.replace(key, translations[key]);
-    }
-    for (const element of document.querySelectorAll('[aria-label], [alt], [title], meta[content]')) {
-      for (const name of ['aria-label', 'alt', 'title', 'content']) {
-        if (element.hasAttribute(name)) element.setAttribute(name, t(element.getAttribute(name)));
-      }
-    }
-    document.querySelector('meta[property="og:locale"]').content = 'en_GB';
-    document.querySelector('meta[property="og:url"]').content = 'https://maxime-fleury.is-a.dev/?lang=en';
-    document.querySelector('link[rel="canonical"]').href = 'https://maxime-fleury.is-a.dev/?lang=en';
   }
-  const switchLink = document.getElementById('language-switch');
-  switchLink.textContent = language === 'en' ? 'FR' : 'EN';
-  switchLink.href = language === 'en' ? '?lang=fr' : '?lang=en';
-  switchLink.lang = language === 'en' ? 'fr' : 'en';
-  switchLink.hreflang = switchLink.lang;
-  switchLink.setAttribute('aria-label', language === 'en' ? 'Switch to French' : 'Passer en anglais');
+  const attributes = [];
+  for (const element of document.querySelectorAll('[aria-label], [alt], [title], meta[content]')) {
+    if (element === switchButton) continue;
+    for (const name of ['aria-label', 'alt', 'title', 'content']) {
+      if (element.hasAttribute(name)) attributes.push({ element, name, original: element.getAttribute(name) });
+    }
+  }
+  function applyLanguage(nextLanguage) {
+    language = nextLanguage;
+    window.portfolioI18n.language = language;
+    document.documentElement.lang = language;
+    for (const { node, original } of nodes) node.nodeValue = original.replace(original.trim(), t(original.trim()));
+    for (const { element, name, original } of attributes) element.setAttribute(name, t(original));
+    const canonical = 'https://maxime-fleury.is-a.dev/' + (language === 'en' ? '?lang=en' : '');
+    document.querySelector('meta[property="og:locale"]').content = language === 'en' ? 'en_GB' : 'fr_FR';
+    document.querySelector('meta[property="og:url"]').content = canonical;
+    document.querySelector('link[rel="canonical"]').href = canonical;
+    switchButton.setAttribute('aria-pressed', String(language === 'en'));
+    switchButton.setAttribute('aria-label', language === 'en' ? 'Switch to French' : 'Passer en anglais');
+    switchButton.title = language === 'en' ? 'Switch to French' : 'Passer en anglais';
+    for (const label of switchButton.querySelectorAll('[data-language]')) {
+      label.classList.toggle('is-active', label.dataset.language === language);
+    }
+    document.getElementById('copy-status').textContent = '';
+  }
+  switchButton.addEventListener('click', () => {
+    const nextLanguage = language === 'fr' ? 'en' : 'fr';
+    const url = new URL(window.location.href);
+    if (nextLanguage === 'en') url.searchParams.set('lang', 'en');
+    else url.searchParams.delete('lang');
+    window.history.pushState(null, '', url);
+    applyLanguage(nextLanguage);
+  });
+  window.addEventListener('popstate', () => applyLanguage(languageFromURL()));
+  applyLanguage(language);
 })();
